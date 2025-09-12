@@ -1,28 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Jugador : MonoBehaviour
 {
     [Header("Configuracion")]
-    [SerializeField] private float vida = 5f;
+    [SerializeField] private int vida = 5;
 
-    public void ModificarVida(float puntos)
+    public UnityEvent<int> OnLivesChanged;
+
+    public void ModificarVida(int puntos)
     {
         vida += puntos;
+        OnLivesChanged.Invoke(vida);
         Debug.Log(EstasVivo());
-    }
 
+        if (vida <= 0)
+        {
+            // Aquí puedes manejar la situación de Game Over
+        }
+    }
 
     private bool EstasVivo()
     {
         return vida > 0;
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!collision.gameObject.CompareTag("Meta")) { return; }
-
-        Debug.Log("GANASTE");
-    }
+    
 }
