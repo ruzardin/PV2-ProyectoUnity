@@ -18,7 +18,7 @@ public class Jugador : MonoBehaviour
 
         if (vida <= 0)
         {
-            // Aquí puedes manejar la situación de Game Over
+            GameEvents.TriggerGameOver();
         }
     }
 
