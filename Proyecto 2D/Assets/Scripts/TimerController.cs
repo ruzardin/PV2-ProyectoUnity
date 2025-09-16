@@ -4,6 +4,8 @@ public class TimerController : MonoBehaviour
 {
     [SerializeField] private float timeToWin = 60f; // segundos para victoria
     private float timer;
+    public UIManager uiManager;
+    public GameManager gameManager;
 
     private void Start()
     {
@@ -12,11 +14,18 @@ public class TimerController : MonoBehaviour
 
     private void Update()
     {
-        timer -= Time.deltaTime;
+        if (gameManager.JuegoTerminado) return;
 
-        if (timer <= 0)
+        if (timer > 0)
         {
-            GameEvents.TriggerVictory();
+            timer -= Time.deltaTime;
+            uiManager.ActualizarTiempo(timer);
+
+            if (timer <= 0)
+            {
+                gameManager.TerminarJuego();
+                GameEvents.TriggerVictory();
+            }
         }
     }
 }

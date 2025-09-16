@@ -21,7 +21,8 @@ public class Mover : MonoBehaviour
     private void OnEnable()
     {
         miRigidbody2D = GetComponent<Rigidbody2D>();
-        gameManager = FindObjectOfType<GameManager>();
+        if (gameManager == null)
+            gameManager = Object.FindFirstObjectByType<GameManager>();
     }
 
     // Codigo ejecutado en cada frame del juego (Intervalo variable)
@@ -41,7 +42,7 @@ public class Mover : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            FindObjectOfType<GameManager>().LoseLife();
+            gameManager.LoseLife();
         }
         else if (collision.gameObject.CompareTag("Victory"))
         {

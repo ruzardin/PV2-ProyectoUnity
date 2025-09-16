@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject victoryMenu;
+    [SerializeField] private UIManager uiManager;
+    private bool juegoTerminado = false;
 
+    public bool JuegoTerminado => juegoTerminado;
     private bool isPaused = false;
 
     private void OnEnable()
@@ -16,6 +19,9 @@ public class GameManager : MonoBehaviour
         GameEvents.OnVictory += ShowVictoryMenu;
         GameEvents.OnPause += Pause;
         GameEvents.OnResume += Resume;
+
+      
+      
     }
 
     private void OnDisable()
@@ -28,6 +34,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (juegoTerminado) return;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -41,51 +49,73 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            LoseLife(); // Reduce vida y dispara GameOver si llega a 0
+        }
+        else if (collision.gameObject.CompareTag("Victory"))
+        {
+            GameEvents.TriggerVictory();
+        }
+    }
+
     public void LoseLife()
     {
+
+        if (juegoTerminado) return;
+
         vidas--;
+        uiManager.ActualizarVidas(vidas);
 
         if (vidas <= 0)
         {
+            juegoTerminado = true;
+            Time.timeScale = 0; // Pausar juego
             GameEvents.TriggerGameOver();
         }
+    }
+
+    public void TerminarJuego()
+    {
+        if (juegoTerminado) return;
+
+        juegoTerminado = true;
+        Time.timeScale = 0;
+        GameEvents.TriggerVictory();
     }
 
     private void Pause()
     {
         isPaused = true;
         Time.timeScale = 0;
-        pauseMenu.SetActive(true);
+        uiManager.MostrarPausa();
     }
 
     private void Resume()
     {
         isPaused = false;
         Time.timeScale = 1;
-        pauseMenu.SetActive(false);
+        uiManager.OcultarPausa();
     }
 
     private void ShowGameOverMenu()
     {
-        gameOverMenu.SetActive(true);
-        Invoke("RestartScene", 10f);
+        uiManager.MostrarGameOver();
+        
     }
 
     private void ShowVictoryMenu()
     {
-        victoryMenu.SetActive(true);
-        Invoke("LoadNextScene", 10f);
+        uiManager.MostrarVictoria();
+        
     }
 
-    private void RestartScene()
+    public void RestartScene()
     {
-        Time.timeScale = 1;
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    private void LoadNextScene()
-    {
         Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
