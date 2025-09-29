@@ -251,7 +251,7 @@ PrefabInstance:
     - target: {fileID: 3540642286588001004, guid: 1256cd72eda7d344fbe24bd3654035bb, type: 3}
       propertyPath: OnLivesChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1327469522}
+      objectReference: {fileID: 0}
     - target: {fileID: 3540642286588001004, guid: 1256cd72eda7d344fbe24bd3654035bb, type: 3}
       propertyPath: OnLivesChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1432,10 +1432,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084071f5a19d61147ae9a3aab4d988b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vidas: 5
-  pauseMenu: {fileID: 348104713}
-  gameOverMenu: {fileID: 2060347395}
-  victoryMenu: {fileID: 1023104020}
   uiManager: {fileID: 1104853758}
 --- !u!4 &1025485750
 Transform:
@@ -1539,6 +1535,7 @@ MonoBehaviour:
   gameOverMenu: {fileID: 2060347395}
   victoryMenu: {fileID: 1023104020}
   pauseMenu: {fileID: 348104713}
+  jugador: {fileID: 0}
 --- !u!1 &1117869570
 GameObject:
   m_ObjectHideFlags: 0
@@ -1550,7 +1547,6 @@ GameObject:
   - component: {fileID: 1117869571}
   - component: {fileID: 1117869574}
   - component: {fileID: 1117869573}
-  - component: {fileID: 1117869572}
   m_Layer: 5
   m_Name: TimerText
   m_TagString: Untagged
@@ -1577,21 +1573,6 @@ RectTransform:
   m_AnchoredPosition: {x: 113, y: -12.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &1117869572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1117869570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eca3bfa9e0bdf234c9b44a8ef7ea328b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeToWin: 60
-  uiManager: {fileID: 0}
-  gameManager: {fileID: 0}
 --- !u!114 &1117869573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2148,7 +2129,7 @@ GameObject:
   - component: {fileID: 1327469521}
   - component: {fileID: 1327469524}
   - component: {fileID: 1327469523}
-  - component: {fileID: 1327469522}
+  - component: {fileID: 1327469525}
   m_Layer: 5
   m_Name: LabelVida
   m_TagString: Untagged
@@ -2175,19 +2156,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -12.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &1327469522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1327469520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c10c84847862a094a9f7c022a5358de2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  miTexto: {fileID: 1327469523}
 --- !u!114 &1327469523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2287,6 +2255,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1327469520}
   m_CullTransparentMesh: 1
+--- !u!114 &1327469525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327469520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942eaa40a84289d4f805cf0ebb2c29fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vidasText: {fileID: 1327469523}
+  timerText: {fileID: 0}
+  gameOverMenu: {fileID: 0}
+  victoryMenu: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  jugador: {fileID: 0}
 --- !u!1 &1472531049
 GameObject:
   m_ObjectHideFlags: 0

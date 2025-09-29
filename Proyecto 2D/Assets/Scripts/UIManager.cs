@@ -11,6 +11,35 @@ public class UIManager : MonoBehaviour
     public GameObject gameOverMenu;
     public GameObject victoryMenu;
     public GameObject pauseMenu;
+    [SerializeField] private Jugador jugador;
+
+    private void Awake()
+    {
+        if (gameOverMenu != null) gameOverMenu.SetActive(false);
+        if (victoryMenu != null) victoryMenu.SetActive(false);
+        if (pauseMenu != null) pauseMenu.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        if (jugador == null)
+        {
+            jugador = Object.FindFirstObjectByType<Jugador>();
+        }
+
+        if (jugador != null)
+        {
+            jugador.OnLivesChanged.AddListener(ActualizarVidas);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (jugador != null)
+        {
+            jugador.OnLivesChanged.RemoveListener(ActualizarVidas);
+        }
+    }
 
     public void ActualizarVidas(int vidas)
     {

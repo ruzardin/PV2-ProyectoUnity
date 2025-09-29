@@ -24,7 +24,6 @@ public class TimerController : MonoBehaviour
             if (timer <= 0)
             {
                 gameManager.TerminarJuego();
-                GameEvents.TriggerVictory();
             }
         }
     }

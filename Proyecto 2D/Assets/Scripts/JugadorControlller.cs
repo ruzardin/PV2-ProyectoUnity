@@ -23,6 +23,7 @@ public class Mover : MonoBehaviour
         miRigidbody2D = GetComponent<Rigidbody2D>();
         if (gameManager == null)
             gameManager = Object.FindFirstObjectByType<GameManager>();
+
     }
 
     // Codigo ejecutado en cada frame del juego (Intervalo variable)
@@ -38,15 +39,5 @@ public class Mover : MonoBehaviour
         miRigidbody2D.MovePosition(miRigidbody2D.position + direccion * (velocidad * Time.fixedDeltaTime));
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            gameManager.LoseLife();
-        }
-        else if (collision.gameObject.CompareTag("Victory"))
-        {
-            GameEvents.TriggerVictory();
-        }
-    }
+    
 }

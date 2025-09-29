@@ -3,25 +3,23 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private int vidas = 3;
-    [SerializeField] private GameObject pauseMenu;
-    [SerializeField] private GameObject gameOverMenu;
-    [SerializeField] private GameObject victoryMenu;
     [SerializeField] private UIManager uiManager;
     private bool juegoTerminado = false;
 
     public bool JuegoTerminado => juegoTerminado;
     private bool isPaused = false;
 
+
     private void OnEnable()
     {
+        if (uiManager == null)
+        {
+            uiManager = Object.FindFirstObjectByType<UIManager>();
+        }
         GameEvents.OnGameOver += ShowGameOverMenu;
         GameEvents.OnVictory += ShowVictoryMenu;
         GameEvents.OnPause += Pause;
         GameEvents.OnResume += Resume;
-
-      
-      
     }
 
     private void OnDisable()
@@ -49,41 +47,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            LoseLife(); // Reduce vida y dispara GameOver si llega a 0
-        }
-        else if (collision.gameObject.CompareTag("Victory"))
-        {
-            GameEvents.TriggerVictory();
-        }
-    }
-
-    public void LoseLife()
-    {
-
-        if (juegoTerminado) return;
-
-        vidas--;
-        uiManager.ActualizarVidas(vidas);
-
-        if (vidas <= 0)
-        {
-            juegoTerminado = true;
-            Time.timeScale = 0; // Pausar juego
-            GameEvents.TriggerGameOver();
-        }
-    }
-
     public void TerminarJuego()
     {
         if (juegoTerminado) return;
-
         juegoTerminado = true;
         Time.timeScale = 0;
         GameEvents.TriggerVictory();
+        uiManager.MostrarVictoria();
     }
 
     private void Pause()
@@ -102,19 +72,28 @@ public class GameManager : MonoBehaviour
 
     private void ShowGameOverMenu()
     {
-        uiManager.MostrarGameOver();
-        
+        if (juegoTerminado) return;
+        juegoTerminado = true;
+        Time.timeScale = 0;
+        if (uiManager != null)
+        {
+            uiManager.MostrarGameOver();
+        }
     }
-
+   
     private void ShowVictoryMenu()
     {
-        uiManager.MostrarVictoria();
-        
+        if (juegoTerminado) return;
+        juegoTerminado = true;
+        Time.timeScale = 0;
+        if (uiManager != null)
+        {
+            uiManager.MostrarVictoria();
+        }
     }
 
     public void RestartScene()
     {
-        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
     }
